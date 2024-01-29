@@ -1,6 +1,4 @@
-"""
-Using A GAN created by Aladdin Persson, this is an attempt to create a VAE-GAN, where the VAE acts as the generator
-"""
+
 
 import torch
 import torch.nn as nn
@@ -10,9 +8,11 @@ import torchvision.datasets as datasets
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 import torch.nn.functional as F
-import VAE as vae
+
+import vae as vae
 import reporter as rp
 import visualization as viz
+import annealer
 
 class Discriminator(nn.Module):
     def __init__(self, in_features):
@@ -28,20 +28,6 @@ class Discriminator(nn.Module):
         x = torch.flatten(x, start_dim=1)
         return self.disc(x)
 
-
-
-class Generator(nn.Module):
-    def __init__(self, z_dim, img_dim):
-        super().__init__()
-        self.gen = nn.Sequential(
-            nn.Linear(z_dim, 256),
-            nn.LeakyReLU(0.01),
-            nn.Linear(256, img_dim),
-            nn.Tanh(),  # normalize inputs to [-1, 1] so make outputs [-1, 1]
-        )
-
-    def forward(self, x):
-        return self.gen(x)
 
 
 # Hyperparameters etc.
@@ -90,7 +76,7 @@ discriminator_optimizer = optim.Adam(discriminator.parameters(), lr=dis_lr)
 generator_optimizer = optim.Adam(generator.parameters(), lr=gen_lr)
 encoder_optimizer = optim.Adam(encoder.parameters(), lr=vae_lr)
 
-random_noise = torch.randn((batch_size, z_dim)).to(device)
+kl_annealer = annealer.Annealer(0, 1, 0.1)
 
 num_mini_batches = len(data_loader_mnist)
 epoch_mse_loss = 1.0
@@ -102,14 +88,6 @@ epoch_generator_loss = 1.0
 
 reporter = rp.Reporter('./logs/vae_gan', './logs/snapshots')
 
-images, labels = next(iter(data_loader_mnist))
-print(images.shape)
-grid = torchvision.utils.make_grid(images)
-reporter.writer.add_graph(encoder, images[0])
-input = encoder(images[0])
-reporter.writer.add_graph(generator, input)
-reporter.writer.add_graph(discriminator, images[0])
-
 flip = False
 for epoch in range(num_epochs):
     if epoch % skip_iteration == 0:
@@ -117,11 +95,11 @@ for epoch in range(num_epochs):
 
     print(f"Epoch [{epoch}/{num_epochs}]")
     if(epoch > 0):
-        reporter.writer.add_scalar('MSE Loss', epoch_mse_loss, epoch)
-        reporter.writer.add_scalar('Discriminator Loss', epoch_discriminator_loss, epoch)
-        reporter.writer.add_scalar('Discriminator Loss Real', epoch_discriminator_loss_real, epoch)
-        reporter.writer.add_scalar('Discriminator Loss Fake', epoch_discriminator_loss_fake, epoch)
-        reporter.writer.add_scalar('Generator Loss', epoch_generator_loss, epoch)
+        reporter.add_scalar('MSE Loss', epoch_mse_loss, epoch)
+        reporter.add_scalar('Discriminator Loss', epoch_discriminator_loss, epoch)
+        reporter.add_scalar('Discriminator Loss Real', epoch_discriminator_loss_real, epoch)
+        reporter.add_scalar('Discriminator Loss Fake', epoch_discriminator_loss_fake, epoch)
+        reporter.add_scalar('Generator Loss', epoch_generator_loss, epoch)
 
 
     print(f"Epoch MSE Loss: {epoch_mse_loss}")
@@ -175,7 +153,7 @@ for epoch in range(num_epochs):
         shaped_real_image = real_image.view(batch_size, 1, 28, 28)
         MSE = F.mse_loss(x_hat, shaped_real_image, reduction='mean')
         epoch_mse_loss += MSE
-        vae_loss = MSE + (0.1) * encoder.kl
+        vae_loss = MSE + (kl_annealer(epoch) * encoder.kl)
         vae_loss.backward(retain_graph=True)
         encoder_optimizer.step()
         generator_optimizer.step()
