@@ -1,10 +1,14 @@
+
 class Annealer():
-    def __init__(self, start: int, max: int, rate: float=0.01):
-        self.start = start
+    def __init__(self, starting_value: int, max: int, rate: float, start_epoch: int = 0):
+        self.start_value = starting_value
         self.rate = rate
         self.max = max
-        self.current = start
+        self.current = starting_value
+        self.start_epoch = start_epoch
 
     def __call__(self, epoch: int):
-        self.current = min(self.start + self.rate * epoch, self.max)
+        if epoch < self.start_epoch:
+            return self.start_value
+        self.current = min(self.start_value + self.rate * (epoch - self.start_epoch), self.max)
         return self.current
