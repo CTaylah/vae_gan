@@ -13,6 +13,7 @@ import vae as vae
 import reporter as rp
 import visualization as viz
 import annealer
+import discriminator_tests as dt
 import torch
 
 class Discriminator(nn.Module):
@@ -39,7 +40,7 @@ dis_lr = 9e-5
 z_dim = 266
 image_dim = 28 * 28 * 1  # 784
 batch_size = 128
-num_epochs = 40
+num_epochs = 50
 negative_slope = 0.01
 skip_iteration = 1
 
@@ -58,8 +59,8 @@ data_loader_mnist = torch.utils.data.DataLoader(dataset_mnist, batch_size=batch_
 discriminator_optimizer = optim.Adam(discriminator.parameters(), lr=dis_lr)
 vae_optimizer = optim.Adam(autoencoder.parameters(), lr=gen_lr)
 
-kl_annealer = annealer.Annealer(0, 0.4, 0.01, start_epoch=10)
-gan_annealer = annealer.Annealer(0, 0.5, 0.01, start_epoch=5)
+kl_annealer = annealer.Annealer(0, 0.5, 0.03, start_epoch=10)
+gan_annealer = annealer.Annealer(0, 1.0, 0.10, start_epoch=10)
 
 num_mini_batches = len(data_loader_mnist)
 epoch_mse_loss = 0.0
@@ -72,6 +73,8 @@ epoch_generator_loss = 0.0
 reporter = rp.Reporter('./logs/vae_gan', './logs/snapshots')
 
 flip = False
+data, _ = next(iter(data_loader_mnist))
+print(dt.test_discriminator(discriminator, data.view(batch_size, -1)))
 for epoch in range(num_epochs):
     if epoch % skip_iteration == 0:
         flip = not flip
@@ -105,7 +108,7 @@ for epoch in range(num_epochs):
         real_image_label = torch.ones(batch_size, 1).to(device)
         output_real = discriminator(real_image)
 
-        real_data_error = nn.BCELoss()(output_real, real_image_label)
+        real_data_error = nn.L1Loss()(output_real, real_image_label)
         real_data_error.backward(retain_graph=True)
 
         ###Train discriminator with fake data###
@@ -114,7 +117,7 @@ for epoch in range(num_epochs):
         fake_image_label = torch.zeros(batch_size, 1).to(device)
         output_fake = discriminator(fake_image)
 
-        fake_data_error = nn.BCELoss()(output_fake, fake_image_label)
+        fake_data_error = nn.L1Loss()(output_fake, fake_image_label)
         fake_data_error.backward(retain_graph=True)
 
         discriminator_error = real_data_error + fake_data_error
@@ -142,7 +145,7 @@ for epoch in range(num_epochs):
         autoencoder.zero_grad()
         x_hat2 = autoencoder(real_image)
         discriminator_guess = discriminator(x_hat2)
-        generator_error = nn.MSELoss()(discriminator_guess, real_image_label) * gan_annealer(epoch)
+        generator_error = nn.L1Loss()(discriminator_guess, real_image_label) * gan_annealer(epoch)
         epoch_generator_loss += generator_error
         generator_error.backward()
 
@@ -203,3 +206,4 @@ plt.savefig('./image.png')
 
 # Show the figure
 plt.show()
+
