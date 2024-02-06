@@ -45,7 +45,10 @@ image_dim = 28 * 28 * 1  # 784
 batch_size = 128
 num_epochs = 50
 negative_slope = 0.01
-skip_iteration = 1
+# How many epochs to train the discriminator before changing the generator
+generator_iterations = 1
+# Vice versa
+discriminator_iterations = 1
 
 
 # autoencoder = VAE(z_dim, 512).to(device)
@@ -65,8 +68,8 @@ data_loader_mnist_test = torch.utils.data.DataLoader(dataset_mnist_test, batch_s
 discriminator_optimizer = optim.Adam(discriminator.parameters(), lr=dis_lr)
 vae_optimizer = optim.Adam(autoencoder.parameters(), lr=gen_lr)
 
-kl_annealer = annealer.Annealer(0.5, 0.5, 0.0, start_epoch=0)
-gan_annealer = annealer.Annealer(0.5, 0.5, 0.0, start_epoch=0)
+kl_annealer = annealer.Annealer(0.0, 0.5, 0.1, start_epoch=5)
+gan_annealer = annealer.Annealer(1.0, 1.0, 0.0, start_epoch=0)
 
 num_mini_batches = len(data_loader_mnist)
 epoch_mse_loss = 0.0
@@ -78,12 +81,16 @@ epoch_generator_loss = 0.0
 
 reporter = rp.Reporter('./logs/vae_gan', './logs/snapshots')
 
-flip = False
-data, _ = next(iter(data_loader_mnist))
-print(dt.test_discriminator(discriminator, data.view(batch_size, -1)))
+flip = True
+discriminator_counter = 0
+generator_counter = 0
 for epoch in range(num_epochs):
-    if epoch % skip_iteration == 0:
+    if flip and discriminator_counter >= discriminator_iterations:
         flip = not flip
+        discriminator_counter = 0
+    elif not flip and generator_counter >= generator_iterations:
+        flip = not flip
+        generator_counter = 0
 
     print(f"Epoch [{epoch}/{num_epochs}]")
     if(epoch > 0):
@@ -119,7 +126,7 @@ for epoch in range(num_epochs):
         # real_data_error.backward(retain_graph=True)
 
         ###Train discriminator with fake data###
-        fake_image = autoencoder(real_image)
+        fake_image = autoencoder(real_image) + (0.1 * torch.randn(batch_size, image_dim).view(batch_size, 1, 28, 28).to(device))
         #Expect fake image to be classified as 0
         fake_image_label = torch.zeros(batch_size, 1).to(device)
         output_fake = discriminator(fake_image)
@@ -148,10 +155,11 @@ for epoch in range(num_epochs):
 
         # Train VAE on discriminator output
         discriminator_guess = discriminator(x_hat)
-        generator_error = nn.L1Loss()(discriminator_guess, real_image_label) * gan_annealer(epoch)
+        generator_error = nn.L1Loss()(discriminator_guess, real_image_label)
         epoch_generator_loss += generator_error
         vae_loss = (MSE + (kl_annealer(epoch) * autoencoder.encoder.kl)) + (gan_annealer(epoch) * generator_error)
         if not flip:
+            print(epoch)
             vae_loss.backward()
             vae_optimizer.step()
 
@@ -162,8 +170,10 @@ for epoch in range(num_epochs):
     epoch_discriminator_loss_fake /= num_mini_batches
     epoch_generator_loss /= num_mini_batches
 
-# viz.plot_latent_encoder(encoder, data_loader_mnist)
-# viz.plot_generated(generator, z_dim, 20)
+    if flip:
+        discriminator_counter += 1
+    else:
+        generator_counter += 1
 reporter.close()
 
 

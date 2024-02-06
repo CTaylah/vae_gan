@@ -1,6 +1,6 @@
 
 class Annealer():
-    def __init__(self, starting_value: int, max: int, rate: float, start_epoch: int = 0):
+    def __init__(self, starting_value: float, max: float, rate: float, start_epoch: int = 0):
         self.start_value = starting_value
         self.rate = rate
         self.max = max
