@@ -2,6 +2,9 @@ import shutil
 from torch.utils.tensorboard import SummaryWriter
 from datetime import datetime
 
+# Inherits from SummaryWriter, so check
+# https://pytorch.org/docs/stable/tensorboard.html for more features
+
 class Reporter(SummaryWriter):
     def __init__(self, log_dir: str, snapshot_directory=None):
         self.log_dir = log_dir
@@ -51,8 +54,8 @@ class Reporter(SummaryWriter):
 # for epoch in range(num_epochs):
     # for batch in batches:
                 #Caluculate error and backprop
-                # reporter.accumulate_loss('MSE Loss', mse.item())
-                # reporter.accumulate_loss('KL Loss', kl.item())
+                # reporter.accumulate_loss('MSE Loss', mse_error_scalar)
+                # reporter.accumulate_loss('KL Loss', kl_error_scalar)
     
     # reporter.write_losses(epoch, len(batches))
     # reporter.zero_losses()
