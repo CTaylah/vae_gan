@@ -53,7 +53,6 @@ discriminator_iterations = 1
 
 # autoencoder = VAE(z_dim, 512).to(device)
 autoencoder = vae.VAE([image_dim, 512, 368, z_dim], [z_dim, 368, 512, image_dim])
-ncoder_layers = nn.Sequential()
 
 discriminator = Discriminator(image_dim)
 
@@ -68,18 +67,13 @@ data_loader_mnist_test = torch.utils.data.DataLoader(dataset_mnist_test, batch_s
 discriminator_optimizer = optim.Adam(discriminator.parameters(), lr=dis_lr)
 vae_optimizer = optim.Adam(autoencoder.parameters(), lr=gen_lr)
 
-kl_annealer = annealer.Annealer(0.0, 0.5, 0.1, start_epoch=5)
-gan_annealer = annealer.Annealer(1.0, 1.0, 0.0, start_epoch=0)
+kl_annealer = annealer.Annealer(0.0, 0.1, 0.01, start_epoch=0)
+gan_annealer = annealer.Annealer(0.0, 0.1, 0.01, start_epoch=0)
 
 num_mini_batches = len(data_loader_mnist)
-epoch_mse_loss = 0.0
-epoch_kl_loss = 0.0
-epoch_discriminator_loss_real = 0.0
-epoch_discriminator_loss_fake = 0.1
-epoch_discriminator_loss = 0.0
-epoch_generator_loss = 0.0
 
 reporter = rp.Reporter('./logs/vae_gan', './logs/snapshots')
+reporter.add_loss_labels(['MSE Loss', 'KL Loss', 'Discriminator Loss', 'Discriminator Loss Real', 'Discriminator Loss Fake', 'Generator Loss'])
 
 flip = True
 discriminator_counter = 0
@@ -92,23 +86,7 @@ for epoch in range(num_epochs):
         flip = not flip
         generator_counter = 0
 
-    print(f"Epoch [{epoch}/{num_epochs}]")
-    if(epoch > 0):
-        reporter.add_scalar('MSE Loss', epoch_mse_loss, epoch)
-        reporter.add_scalar('KL Loss', epoch_kl_loss, epoch)
-        reporter.add_scalar('Discriminator Loss', epoch_discriminator_loss, epoch)
-        reporter.add_scalar('Discriminator Loss Real', epoch_discriminator_loss_real, epoch)
-        reporter.add_scalar('Discriminator Loss Fake', epoch_discriminator_loss_fake, epoch)
-        reporter.add_scalar('Generator Loss', epoch_generator_loss, epoch)
 
-
-    print(f"Epoch MSE Loss: {epoch_mse_loss}")
-    epoch_mse_loss = 0
-    epoch_kl_loss = 0
-    epoch_discriminator_loss = 0
-    epoch_discriminator_loss_real = 0
-    epoch_discriminator_loss_fake = 0
-    epoch_generator_loss = 0
 
     for i, (data, label) in enumerate (data_loader_mnist):
         data = data.to(device)
@@ -139,9 +117,9 @@ for epoch in range(num_epochs):
             discriminator_error.backward(retain_graph=True)
             discriminator_optimizer.step()
 
-        epoch_discriminator_loss += discriminator_error
-        epoch_discriminator_loss_real += real_data_error
-        epoch_discriminator_loss_fake += fake_data_error
+        reporter.accumulate_loss('Discriminator Loss', discriminator_error)
+        reporter.accumulate_loss('Discriminator Loss Real', real_data_error)
+        reporter.accumulate_loss('Discriminator Loss Fake', fake_data_error)
 
             
         # Train VAE on MSE and KL divergence
@@ -150,30 +128,32 @@ for epoch in range(num_epochs):
 
         shaped_real_image = real_image.view(batch_size, 1, 28, 28)
         MSE = F.mse_loss(x_hat, shaped_real_image, reduction='mean')
-        epoch_mse_loss += MSE
-        epoch_kl_loss +=  autoencoder.encoder.kl
+
+        reporter.accumulate_loss('MSE Loss', MSE)
+        reporter.accumulate_loss('KL Loss', autoencoder.encoder.kl)
 
         # Train VAE on discriminator output
         discriminator_guess = discriminator(x_hat)
         generator_error = nn.L1Loss()(discriminator_guess, real_image_label)
-        epoch_generator_loss += generator_error
+
+        reporter.accumulate_loss('Generator Loss', generator_error)
+
         vae_loss = (MSE + (kl_annealer(epoch) * autoencoder.encoder.kl)) + (gan_annealer(epoch) * generator_error)
         if not flip:
-            print(epoch)
             vae_loss.backward()
             vae_optimizer.step()
 
-    epoch_mse_loss /= num_mini_batches
-    epoch_kl_loss /= num_mini_batches
-    epoch_discriminator_loss /= num_mini_batches
-    epoch_discriminator_loss_real /= num_mini_batches
-    epoch_discriminator_loss_fake /= num_mini_batches
-    epoch_generator_loss /= num_mini_batches
+    print(f"Epoch [{epoch}/{num_epochs}]")
+    # if(epoch > 0):
+    reporter.write_losses(epoch, len(data_loader_mnist))
+    reporter.zero_losses()
+
 
     if flip:
         discriminator_counter += 1
     else:
         generator_counter += 1
+
 reporter.close()
 
 
