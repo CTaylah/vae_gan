@@ -43,13 +43,15 @@ dis_lr = 5e-5
 z_dim = 266
 image_dim = 28 * 28 * 1  # 784
 batch_size = 128
-num_epochs = 50
+num_epochs = 35
 negative_slope = 0.01
 # How many epochs to train the discriminator before changing the generator
 generator_iterations = 1
 # Vice versa
 discriminator_iterations = 1
 
+kl_annealer = annealer.Annealer(0.0, 0.1, 0.01, start_epoch=0)
+gan_annealer = annealer.Annealer(0.1, 0.1, 0.008, start_epoch=0)
 
 # autoencoder = VAE(z_dim, 512).to(device)
 autoencoder = vae.VAE([image_dim, 512, 368, z_dim], [z_dim, 368, 512, image_dim])
@@ -67,8 +69,6 @@ data_loader_mnist_test = torch.utils.data.DataLoader(dataset_mnist_test, batch_s
 discriminator_optimizer = optim.Adam(discriminator.parameters(), lr=dis_lr)
 vae_optimizer = optim.Adam(autoencoder.parameters(), lr=gen_lr)
 
-kl_annealer = annealer.Annealer(0.0, 0.1, 0.01, start_epoch=0)
-gan_annealer = annealer.Annealer(0.0, 0.1, 0.01, start_epoch=0)
 
 num_mini_batches = len(data_loader_mnist)
 
@@ -87,7 +87,6 @@ for epoch in range(num_epochs):
         generator_counter = 0
 
 
-
     for i, (data, label) in enumerate (data_loader_mnist):
         data = data.to(device)
         batch_size = data.shape[0]
@@ -100,16 +99,16 @@ for epoch in range(num_epochs):
         real_image_label = torch.ones(batch_size, 1).to(device)
         output_real = discriminator(real_image)
 
-        real_data_error = nn.L1Loss()(output_real, real_image_label)
+        real_data_error = nn.BCELoss()(output_real, real_image_label)
         # real_data_error.backward(retain_graph=True)
 
         ###Train discriminator with fake data###
-        fake_image = autoencoder(real_image) + (0.1 * torch.randn(batch_size, image_dim).view(batch_size, 1, 28, 28).to(device))
+        fake_image = autoencoder(real_image) #+ (0.1 * torch.randn(batch_size, image_dim).view(batch_size, 1, 28, 28).to(device))
         #Expect fake image to be classified as 0
         fake_image_label = torch.zeros(batch_size, 1).to(device)
         output_fake = discriminator(fake_image)
 
-        fake_data_error = nn.L1Loss()(output_fake, fake_image_label)
+        fake_data_error = nn.BCELoss()(output_fake, fake_image_label)
         # fake_data_error.backward(retain_graph=True)
 
         if flip:
@@ -134,7 +133,7 @@ for epoch in range(num_epochs):
 
         # Train VAE on discriminator output
         discriminator_guess = discriminator(x_hat)
-        generator_error = nn.L1Loss()(discriminator_guess, real_image_label)
+        generator_error = nn.BCELoss()(discriminator_guess, real_image_label)
 
         reporter.accumulate_loss('Generator Loss', generator_error)
 
@@ -144,7 +143,6 @@ for epoch in range(num_epochs):
             vae_optimizer.step()
 
     print(f"Epoch [{epoch}/{num_epochs}]")
-    # if(epoch > 0):
     reporter.write_losses(epoch, len(data_loader_mnist))
     reporter.zero_losses()
 

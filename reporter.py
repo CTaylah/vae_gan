@@ -30,7 +30,6 @@ class Reporter(SummaryWriter):
         for loss in self.losses:
             self.losses[loss] = 0
     
-    
     def accumulate_loss(self, name: str, value: float):
         self.losses[name] += value
 

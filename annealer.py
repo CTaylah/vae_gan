@@ -6,8 +6,11 @@ class Annealer():
         self.max = max
         self.current = starting_value
         self.start_epoch = start_epoch
+        self.stop = False
 
     def __call__(self, epoch: int):
+        if self.stop:
+            return 0;
         if epoch < self.start_epoch:
             return self.start_value
         self.current = min(self.start_value + self.rate * (epoch - self.start_epoch), self.max)
