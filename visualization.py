@@ -62,6 +62,7 @@ def save_tensor_as_ppm(tensor, filename, scale_factor=5):
     image = transform(tensor)
 
     # Scale up the image
+    width, height = image.size
     new_width = 28 * scale_factor
     new_height = 28 * scale_factor
     scaled_image = image.resize((new_width, new_height))
