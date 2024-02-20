@@ -1,20 +1,19 @@
 
 
+from numpy import genfromtxt
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import torchvision
 import torchvision.datasets as datasets
-from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 import torch.nn.functional as F
+from torchsnapshot import StateDict
+from torchsnapshot import Snapshot
 torch.manual_seed(42)
 
 import vae as vae
 import reporter as rp
-import visualization as viz
 import annealer
-import discriminator_tests as dt
 import torch
 
 class Discriminator(nn.Module):
@@ -38,42 +37,12 @@ class Discriminator(nn.Module):
 # Hyperparameters etc.
 device = "cuda" if torch.cuda.is_available() else "cpu"
 vae_lr = 5e-5
-gen_lr = 5e-5
-dis_lr = 5e-5
+gen_lr = 5e-6
+dis_lr = 5e-4
 z_dim = 266
 image_dim = 28 * 28 * 1  # 784
 batch_size = 128
-num_epochs = 35
-negative_slope = 0.01
-# How many epochs to train the discriminator before changing the generator
-generator_iterations = 1
-# Vice versa
-discriminator_iterations = 1
-
-kl_annealer = annealer.Annealer(0.0, 0.1, 0.01, start_epoch=0)
-gan_annealer = annealer.Annealer(0.1, 0.1, 0.008, start_epoch=0)
-
-# autoencoder = VAE(z_dim, 512).to(device)
-autoencoder = vae.VAE([image_dim, 512, 368, z_dim], [z_dim, 368, 512, image_dim])
-
-discriminator = Discriminator(image_dim)
-
-
-dataset_mnist = datasets.MNIST(root='./data', train=True, transform=transforms.ToTensor(), download=True)
-data_loader_mnist = torch.utils.data.DataLoader(dataset_mnist, batch_size=batch_size, shuffle=True)
-
-
-dataset_mnist_test = datasets.MNIST(root='./data', train=False, transform=transforms.ToTensor(), download=True)
-data_loader_mnist_test = torch.utils.data.DataLoader(dataset_mnist_test, batch_size=batch_size, shuffle=True)
-
-discriminator_optimizer = optim.Adam(discriminator.parameters(), lr=dis_lr)
-vae_optimizer = optim.Adam(autoencoder.parameters(), lr=gen_lr)
-
-
-num_mini_batches = len(data_loader_mnist)
-
-reporter = rp.Reporter('./logs/vae_gan', './logs/snapshots')
-reporter.add_loss_labels(['MSE Loss', 'KL Loss', 'Discriminator Loss', 'Discriminator Loss Real', 'Discriminator Loss Fake', 'Generator Loss'])
+num_epochs = 
 
 flip = True
 discriminator_counter = 0
@@ -99,7 +68,7 @@ for epoch in range(num_epochs):
         real_image_label = torch.ones(batch_size, 1).to(device)
         output_real = discriminator(real_image)
 
-        real_data_error = nn.BCELoss()(output_real, real_image_label)
+        real_data_error = nn.L1Loss()(output_real, real_image_label)
         # real_data_error.backward(retain_graph=True)
 
         ###Train discriminator with fake data###
@@ -108,11 +77,11 @@ for epoch in range(num_epochs):
         fake_image_label = torch.zeros(batch_size, 1).to(device)
         output_fake = discriminator(fake_image)
 
-        fake_data_error = nn.BCELoss()(output_fake, fake_image_label)
+        fake_data_error = nn.L1Loss()(output_fake, fake_image_label)
         # fake_data_error.backward(retain_graph=True)
 
+        discriminator_error = real_data_error + fake_data_error
         if flip:
-            discriminator_error = real_data_error + fake_data_error
             discriminator_error.backward(retain_graph=True)
             discriminator_optimizer.step()
 
@@ -133,7 +102,7 @@ for epoch in range(num_epochs):
 
         # Train VAE on discriminator output
         discriminator_guess = discriminator(x_hat)
-        generator_error = nn.BCELoss()(discriminator_guess, real_image_label)
+        generator_error = nn.L1Loss()(discriminator_guess, real_image_label)
 
         reporter.accumulate_loss('Generator Loss', generator_error)
 
@@ -141,6 +110,7 @@ for epoch in range(num_epochs):
         if not flip:
             vae_loss.backward()
             vae_optimizer.step()
+            generator_optimizer.step()
 
     print(f"Epoch [{epoch}/{num_epochs}]")
     reporter.write_losses(epoch, len(data_loader_mnist))
@@ -157,6 +127,20 @@ reporter.close()
 
 # Set the autoencoder to evaluation mode
 autoencoder.eval()
+
+app_state = {
+    'autoencoder': autoencoder, 
+    'discriminator': discriminator
+}
+snapshot = Snapshot.take(path=reporter.file_folder, app_state=app_state)
+
+
+
+
+
+
+
+
 
 # Generate a batch of data
 data, _ = next(iter(data_loader_mnist_test))
