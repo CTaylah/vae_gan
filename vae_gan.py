@@ -8,38 +8,23 @@ import torchvision.datasets as datasets
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 import torch.nn.functional as F
+from torchsnapshot import StateDict
+from torchsnapshot import Snapshot
 torch.manual_seed(42)
 
 import vae as vae
+from discriminator import Discriminator
 import reporter as rp
 import visualization as viz
 import annealer
 import discriminator_tests as dt
-import torch
-
-class Discriminator(nn.Module):
-    def __init__(self, in_features):
-        super().__init__()
-        self.disc = nn.Sequential(
-            nn.Linear(in_features, 256),
-            nn.LeakyReLU(0.01),
-            nn.Linear(256, 128),
-            nn.LeakyReLU(0.01),
-            nn.Linear(128, 1),
-            nn.Sigmoid(),
-        )
-
-    def forward(self, x):
-        x = torch.flatten(x, start_dim=1)
-        return self.disc(x)
-
 
 
 # Hyperparameters etc.
 device = "cuda" if torch.cuda.is_available() else "cpu"
 vae_lr = 5e-5
 gen_lr = 5e-5
-dis_lr = 5e-5
+dis_lr = 3e-4
 z_dim = 266
 image_dim = 28 * 28 * 1  # 784
 batch_size = 128
@@ -51,7 +36,7 @@ generator_iterations = 1
 discriminator_iterations = 1
 
 kl_annealer = annealer.Annealer(0.0, 0.1, 0.01, start_epoch=0)
-gan_annealer = annealer.Annealer(0.1, 0.1, 0.008, start_epoch=0)
+gan_annealer = annealer.Annealer(0.1, 0.1, 0.000, start_epoch=0)
 
 # autoencoder = VAE(z_dim, 512).to(device)
 autoencoder = vae.VAE([image_dim, 512, 368, z_dim], [z_dim, 368, 512, image_dim])
@@ -99,7 +84,7 @@ for epoch in range(num_epochs):
         real_image_label = torch.ones(batch_size, 1).to(device)
         output_real = discriminator(real_image)
 
-        real_data_error = nn.BCELoss()(output_real, real_image_label)
+        real_data_error = nn.L1Loss()(output_real, real_image_label)
         # real_data_error.backward(retain_graph=True)
 
         ###Train discriminator with fake data###
@@ -108,7 +93,7 @@ for epoch in range(num_epochs):
         fake_image_label = torch.zeros(batch_size, 1).to(device)
         output_fake = discriminator(fake_image)
 
-        fake_data_error = nn.BCELoss()(output_fake, fake_image_label)
+        fake_data_error = nn.L1Loss()(output_fake, fake_image_label)
         # fake_data_error.backward(retain_graph=True)
 
         if flip:
@@ -152,7 +137,15 @@ for epoch in range(num_epochs):
     else:
         generator_counter += 1
 
-reporter.close()
+
+app_state = {
+    "model": autoencoder,
+    "optimizer": vae_optimizer
+}
+
+snapshot = Snapshot.take("path=reporter.file_folder", app_state=app_state)
+
+dt.test_discriminator(autoencoder, data_loader_mnist, reporter)
 
 
 # Set the autoencoder to evaluation mode
@@ -196,5 +189,3 @@ plt.tight_layout()
 plt.savefig(reporter.file_folder + '/reconstructed_samples.png')
 plt.savefig('./reconstructed_samples.png')
 
-reporter.add_image('Reconstructed Samples', reporter.file_folder + '/reconstructed_samples.png')
-# Show the figure

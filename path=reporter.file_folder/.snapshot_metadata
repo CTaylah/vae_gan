@@ -1,0 +1,1109 @@
+{
+  "version": "0.1.0",
+  "world_size": 1,
+  "manifest": {
+    "0/model": {
+      "type": "OrderedDict",
+      "keys": [
+        "encoder.layers.0.weight",
+        "encoder.layers.0.bias",
+        "encoder.layers.2.weight",
+        "encoder.layers.2.bias",
+        "encoder.mu_layer.weight",
+        "encoder.mu_layer.bias",
+        "encoder.log_variance_layer.weight",
+        "encoder.log_variance_layer.bias",
+        "decoder.layers.layer0.weight",
+        "decoder.layers.layer0.bias",
+        "decoder.layers.layer1.weight",
+        "decoder.layers.layer1.bias",
+        "decoder.layers.layer2.weight",
+        "decoder.layers.layer2.bias"
+      ]
+    },
+    "0/optimizer": {
+      "type": "dict",
+      "keys": [
+        "state",
+        "param_groups"
+      ]
+    },
+    "0/optimizer/state": {
+      "type": "dict",
+      "keys": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    "0/optimizer/state/0": {
+      "type": "dict",
+      "keys": [
+        "step",
+        "exp_avg",
+        "exp_avg_sq"
+      ]
+    },
+    "0/optimizer/state/1": {
+      "type": "dict",
+      "keys": [
+        "step",
+        "exp_avg",
+        "exp_avg_sq"
+      ]
+    },
+    "0/optimizer/state/2": {
+      "type": "dict",
+      "keys": [
+        "step",
+        "exp_avg",
+        "exp_avg_sq"
+      ]
+    },
+    "0/optimizer/state/3": {
+      "type": "dict",
+      "keys": [
+        "step",
+        "exp_avg",
+        "exp_avg_sq"
+      ]
+    },
+    "0/optimizer/state/4": {
+      "type": "dict",
+      "keys": [
+        "step",
+        "exp_avg",
+        "exp_avg_sq"
+      ]
+    },
+    "0/optimizer/state/5": {
+      "type": "dict",
+      "keys": [
+        "step",
+        "exp_avg",
+        "exp_avg_sq"
+      ]
+    },
+    "0/optimizer/state/6": {
+      "type": "dict",
+      "keys": [
+        "step",
+        "exp_avg",
+        "exp_avg_sq"
+      ]
+    },
+    "0/optimizer/state/7": {
+      "type": "dict",
+      "keys": [
+        "step",
+        "exp_avg",
+        "exp_avg_sq"
+      ]
+    },
+    "0/optimizer/state/8": {
+      "type": "dict",
+      "keys": [
+        "step",
+        "exp_avg",
+        "exp_avg_sq"
+      ]
+    },
+    "0/optimizer/state/9": {
+      "type": "dict",
+      "keys": [
+        "step",
+        "exp_avg",
+        "exp_avg_sq"
+      ]
+    },
+    "0/optimizer/state/10": {
+      "type": "dict",
+      "keys": [
+        "step",
+        "exp_avg",
+        "exp_avg_sq"
+      ]
+    },
+    "0/optimizer/state/11": {
+      "type": "dict",
+      "keys": [
+        "step",
+        "exp_avg",
+        "exp_avg_sq"
+      ]
+    },
+    "0/optimizer/state/12": {
+      "type": "dict",
+      "keys": [
+        "step",
+        "exp_avg",
+        "exp_avg_sq"
+      ]
+    },
+    "0/optimizer/state/13": {
+      "type": "dict",
+      "keys": [
+        "step",
+        "exp_avg",
+        "exp_avg_sq"
+      ]
+    },
+    "0/optimizer/param_groups": {
+      "type": "list"
+    },
+    "0/optimizer/param_groups/0": {
+      "type": "dict",
+      "keys": [
+        "lr",
+        "betas",
+        "eps",
+        "weight_decay",
+        "amsgrad",
+        "maximize",
+        "foreach",
+        "capturable",
+        "differentiable",
+        "fused",
+        "params"
+      ]
+    },
+    "0/optimizer/param_groups/0/params": {
+      "type": "list"
+    },
+    "0/optimizer/param_groups/0/lr": {
+      "type": "float",
+      "serialized_value": "LUMc6+I2Cj8=",
+      "replicated": false,
+      "readable": "5e-05"
+    },
+    "0/optimizer/param_groups/0/eps": {
+      "type": "float",
+      "serialized_value": "Ooww4o55RT4=",
+      "replicated": false,
+      "readable": "1e-08"
+    },
+    "0/optimizer/param_groups/0/weight_decay": {
+      "type": "int",
+      "serialized_value": "0",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/amsgrad": {
+      "type": "bool",
+      "serialized_value": "False",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/maximize": {
+      "type": "bool",
+      "serialized_value": "False",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/capturable": {
+      "type": "bool",
+      "serialized_value": "False",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/differentiable": {
+      "type": "bool",
+      "serialized_value": "False",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/params/0": {
+      "type": "int",
+      "serialized_value": "0",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/params/1": {
+      "type": "int",
+      "serialized_value": "1",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/params/2": {
+      "type": "int",
+      "serialized_value": "2",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/params/3": {
+      "type": "int",
+      "serialized_value": "3",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/params/4": {
+      "type": "int",
+      "serialized_value": "4",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/params/5": {
+      "type": "int",
+      "serialized_value": "5",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/params/6": {
+      "type": "int",
+      "serialized_value": "6",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/params/7": {
+      "type": "int",
+      "serialized_value": "7",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/params/8": {
+      "type": "int",
+      "serialized_value": "8",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/params/9": {
+      "type": "int",
+      "serialized_value": "9",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/params/10": {
+      "type": "int",
+      "serialized_value": "10",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/params/11": {
+      "type": "int",
+      "serialized_value": "11",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/params/12": {
+      "type": "int",
+      "serialized_value": "12",
+      "replicated": false,
+      "readable": null
+    },
+    "0/optimizer/param_groups/0/params/13": {
+      "type": "int",
+      "serialized_value": "13",
+      "replicated": false,
+      "readable": null
+    },
+    "0/model/encoder.layers.0.weight": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        512,
+        784
+      ],
+      "replicated": false,
+      "byte_range": [
+        0,
+        1605632
+      ]
+    },
+    "0/model/encoder.layers.0.bias": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        512
+      ],
+      "replicated": false,
+      "byte_range": [
+        1605632,
+        1607680
+      ]
+    },
+    "0/model/encoder.layers.2.weight": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        368,
+        512
+      ],
+      "replicated": false,
+      "byte_range": [
+        1607680,
+        2361344
+      ]
+    },
+    "0/model/encoder.layers.2.bias": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        368
+      ],
+      "replicated": false,
+      "byte_range": [
+        2361344,
+        2362816
+      ]
+    },
+    "0/model/encoder.mu_layer.weight": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        266,
+        368
+      ],
+      "replicated": false,
+      "byte_range": [
+        2362816,
+        2754368
+      ]
+    },
+    "0/model/encoder.mu_layer.bias": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        266
+      ],
+      "replicated": false,
+      "byte_range": [
+        2754368,
+        2755432
+      ]
+    },
+    "0/model/encoder.log_variance_layer.weight": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        266,
+        368
+      ],
+      "replicated": false,
+      "byte_range": [
+        2755432,
+        3146984
+      ]
+    },
+    "0/model/encoder.log_variance_layer.bias": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        266
+      ],
+      "replicated": false,
+      "byte_range": [
+        3146984,
+        3148048
+      ]
+    },
+    "0/model/decoder.layers.layer0.weight": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        368,
+        266
+      ],
+      "replicated": false,
+      "byte_range": [
+        3148048,
+        3539600
+      ]
+    },
+    "0/model/decoder.layers.layer0.bias": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        368
+      ],
+      "replicated": false,
+      "byte_range": [
+        3539600,
+        3541072
+      ]
+    },
+    "0/model/decoder.layers.layer1.weight": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        512,
+        368
+      ],
+      "replicated": false,
+      "byte_range": [
+        3541072,
+        4294736
+      ]
+    },
+    "0/model/decoder.layers.layer1.bias": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        512
+      ],
+      "replicated": false,
+      "byte_range": [
+        4294736,
+        4296784
+      ]
+    },
+    "0/model/decoder.layers.layer2.weight": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        784,
+        512
+      ],
+      "replicated": false,
+      "byte_range": [
+        4296784,
+        5902416
+      ]
+    },
+    "0/model/decoder.layers.layer2.bias": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        784
+      ],
+      "replicated": false,
+      "byte_range": [
+        5902416,
+        5905552
+      ]
+    },
+    "0/optimizer/state/0/step": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [],
+      "replicated": false,
+      "byte_range": [
+        5905552,
+        5905556
+      ]
+    },
+    "0/optimizer/state/0/exp_avg": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        512,
+        784
+      ],
+      "replicated": false,
+      "byte_range": [
+        5905556,
+        7511188
+      ]
+    },
+    "0/optimizer/state/0/exp_avg_sq": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        512,
+        784
+      ],
+      "replicated": false,
+      "byte_range": [
+        7511188,
+        9116820
+      ]
+    },
+    "0/optimizer/state/1/step": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [],
+      "replicated": false,
+      "byte_range": [
+        9116820,
+        9116824
+      ]
+    },
+    "0/optimizer/state/1/exp_avg": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        512
+      ],
+      "replicated": false,
+      "byte_range": [
+        9116824,
+        9118872
+      ]
+    },
+    "0/optimizer/state/1/exp_avg_sq": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        512
+      ],
+      "replicated": false,
+      "byte_range": [
+        9118872,
+        9120920
+      ]
+    },
+    "0/optimizer/state/2/step": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [],
+      "replicated": false,
+      "byte_range": [
+        9120920,
+        9120924
+      ]
+    },
+    "0/optimizer/state/2/exp_avg": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        368,
+        512
+      ],
+      "replicated": false,
+      "byte_range": [
+        9120924,
+        9874588
+      ]
+    },
+    "0/optimizer/state/2/exp_avg_sq": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        368,
+        512
+      ],
+      "replicated": false,
+      "byte_range": [
+        9874588,
+        10628252
+      ]
+    },
+    "0/optimizer/state/3/step": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [],
+      "replicated": false,
+      "byte_range": [
+        10628252,
+        10628256
+      ]
+    },
+    "0/optimizer/state/3/exp_avg": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        368
+      ],
+      "replicated": false,
+      "byte_range": [
+        10628256,
+        10629728
+      ]
+    },
+    "0/optimizer/state/3/exp_avg_sq": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        368
+      ],
+      "replicated": false,
+      "byte_range": [
+        10629728,
+        10631200
+      ]
+    },
+    "0/optimizer/state/4/step": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [],
+      "replicated": false,
+      "byte_range": [
+        10631200,
+        10631204
+      ]
+    },
+    "0/optimizer/state/4/exp_avg": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        266,
+        368
+      ],
+      "replicated": false,
+      "byte_range": [
+        10631204,
+        11022756
+      ]
+    },
+    "0/optimizer/state/4/exp_avg_sq": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        266,
+        368
+      ],
+      "replicated": false,
+      "byte_range": [
+        11022756,
+        11414308
+      ]
+    },
+    "0/optimizer/state/5/step": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [],
+      "replicated": false,
+      "byte_range": [
+        11414308,
+        11414312
+      ]
+    },
+    "0/optimizer/state/5/exp_avg": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        266
+      ],
+      "replicated": false,
+      "byte_range": [
+        11414312,
+        11415376
+      ]
+    },
+    "0/optimizer/state/5/exp_avg_sq": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        266
+      ],
+      "replicated": false,
+      "byte_range": [
+        11415376,
+        11416440
+      ]
+    },
+    "0/optimizer/state/6/step": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [],
+      "replicated": false,
+      "byte_range": [
+        11416440,
+        11416444
+      ]
+    },
+    "0/optimizer/state/6/exp_avg": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        266,
+        368
+      ],
+      "replicated": false,
+      "byte_range": [
+        11416444,
+        11807996
+      ]
+    },
+    "0/optimizer/state/6/exp_avg_sq": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        266,
+        368
+      ],
+      "replicated": false,
+      "byte_range": [
+        11807996,
+        12199548
+      ]
+    },
+    "0/optimizer/state/7/step": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [],
+      "replicated": false,
+      "byte_range": [
+        12199548,
+        12199552
+      ]
+    },
+    "0/optimizer/state/7/exp_avg": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        266
+      ],
+      "replicated": false,
+      "byte_range": [
+        12199552,
+        12200616
+      ]
+    },
+    "0/optimizer/state/7/exp_avg_sq": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        266
+      ],
+      "replicated": false,
+      "byte_range": [
+        12200616,
+        12201680
+      ]
+    },
+    "0/optimizer/state/8/step": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [],
+      "replicated": false,
+      "byte_range": [
+        12201680,
+        12201684
+      ]
+    },
+    "0/optimizer/state/8/exp_avg": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        368,
+        266
+      ],
+      "replicated": false,
+      "byte_range": [
+        12201684,
+        12593236
+      ]
+    },
+    "0/optimizer/state/8/exp_avg_sq": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        368,
+        266
+      ],
+      "replicated": false,
+      "byte_range": [
+        12593236,
+        12984788
+      ]
+    },
+    "0/optimizer/state/9/step": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [],
+      "replicated": false,
+      "byte_range": [
+        12984788,
+        12984792
+      ]
+    },
+    "0/optimizer/state/9/exp_avg": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        368
+      ],
+      "replicated": false,
+      "byte_range": [
+        12984792,
+        12986264
+      ]
+    },
+    "0/optimizer/state/9/exp_avg_sq": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        368
+      ],
+      "replicated": false,
+      "byte_range": [
+        12986264,
+        12987736
+      ]
+    },
+    "0/optimizer/state/10/step": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [],
+      "replicated": false,
+      "byte_range": [
+        12987736,
+        12987740
+      ]
+    },
+    "0/optimizer/state/10/exp_avg": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        512,
+        368
+      ],
+      "replicated": false,
+      "byte_range": [
+        12987740,
+        13741404
+      ]
+    },
+    "0/optimizer/state/10/exp_avg_sq": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        512,
+        368
+      ],
+      "replicated": false,
+      "byte_range": [
+        13741404,
+        14495068
+      ]
+    },
+    "0/optimizer/state/11/step": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [],
+      "replicated": false,
+      "byte_range": [
+        14495068,
+        14495072
+      ]
+    },
+    "0/optimizer/state/11/exp_avg": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        512
+      ],
+      "replicated": false,
+      "byte_range": [
+        14495072,
+        14497120
+      ]
+    },
+    "0/optimizer/state/11/exp_avg_sq": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        512
+      ],
+      "replicated": false,
+      "byte_range": [
+        14497120,
+        14499168
+      ]
+    },
+    "0/optimizer/state/12/step": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [],
+      "replicated": false,
+      "byte_range": [
+        14499168,
+        14499172
+      ]
+    },
+    "0/optimizer/state/12/exp_avg": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        784,
+        512
+      ],
+      "replicated": false,
+      "byte_range": [
+        14499172,
+        16104804
+      ]
+    },
+    "0/optimizer/state/12/exp_avg_sq": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        784,
+        512
+      ],
+      "replicated": false,
+      "byte_range": [
+        16104804,
+        17710436
+      ]
+    },
+    "0/optimizer/state/13/step": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [],
+      "replicated": false,
+      "byte_range": [
+        17710436,
+        17710440
+      ]
+    },
+    "0/optimizer/state/13/exp_avg": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        784
+      ],
+      "replicated": false,
+      "byte_range": [
+        17710440,
+        17713576
+      ]
+    },
+    "0/optimizer/state/13/exp_avg_sq": {
+      "type": "Tensor",
+      "location": "batched/d0ec1d88-a5e5-4033-b0b0-f190ad09aff2",
+      "serializer": "buffer_protocol",
+      "dtype": "torch.float32",
+      "shape": [
+        784
+      ],
+      "replicated": false,
+      "byte_range": [
+        17713576,
+        17716712
+      ]
+    },
+    "0/optimizer/param_groups/0/betas": {
+      "type": "object",
+      "location": "0/optimizer/param_groups/0/betas",
+      "serializer": "torch_save",
+      "obj_type": "builtins.tuple",
+      "replicated": false
+    },
+    "0/optimizer/param_groups/0/foreach": {
+      "type": "object",
+      "location": "0/optimizer/param_groups/0/foreach",
+      "serializer": "torch_save",
+      "obj_type": "builtins.NoneType",
+      "replicated": false
+    },
+    "0/optimizer/param_groups/0/fused": {
+      "type": "object",
+      "location": "0/optimizer/param_groups/0/fused",
+      "serializer": "torch_save",
+      "obj_type": "builtins.NoneType",
+      "replicated": false
+    }
+  }
+}
