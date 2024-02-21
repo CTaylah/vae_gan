@@ -15,3 +15,8 @@ class Annealer():
             return self.start_value
         self.current = min(self.start_value + self.rate * (epoch - self.start_epoch), self.max)
         return self.current
+
+class CyclicAnnealer():
+    pass
+
+

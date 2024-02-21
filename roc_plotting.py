@@ -6,6 +6,8 @@ from sklearn.metrics import roc_curve, roc_auc_score
 from torch.utils.data import DataLoader
 
 
+#Thank you Ethan
+
 """
 This function is used to plot the ROC curve for the discriminator model.
 It takes in the discriminator model, generator model, dataloader and device as input.
@@ -36,6 +38,7 @@ def roc_plot(discriminator: nn.Module, generator: nn.Module, dataloader: DataLoa
 
         # append model predictions from both real data
         model_prediction.append(real_pred)
+        
         # append model predictions from both fake data
         model_prediction.append(fake_pred)
         
@@ -57,9 +60,11 @@ def roc_plot(discriminator: nn.Module, generator: nn.Module, dataloader: DataLoa
     true_positive_rate = true_positive_rate * 100
 
     # calculate AUC
-    # auc = roc_auc_score(true_value, model_prediction)
-
+    auc = roc_auc_score(true_value, model_prediction)
+    
 
     # uses step as the false positive rate
     for i in range(len(true_positive_rate)):
         reporter.add_scalar('True_Positive_Rate', true_positive_rate[i], false_positive_rate[i])
+
+    reporter.add_scalar('ROC_AUC', auc, 0)

@@ -10,7 +10,7 @@ from roc_plotting import roc_plot
 image_dim = 784
 device = 'cpu'
 
-def test_discriminator(generator: nn.Module, data_loader,reporter: Reporter, training_epochs=2, lr=5e-5):
+def test_discriminator(generator: nn.Module, data_loader,reporter: Reporter, training_epochs=1, lr=5e-5):
     discriminator = Discriminator(784)
     optimizer = discriminator_optimizer = optim.Adam(discriminator.parameters(), lr=lr)
 

@@ -118,7 +118,7 @@ for epoch in range(num_epochs):
 
         # Train VAE on discriminator output
         discriminator_guess = discriminator(x_hat)
-        generator_error = nn.BCELoss()(discriminator_guess, real_image_label)
+        generator_error = nn.L1Loss()(discriminator_guess, real_image_label)
 
         reporter.accumulate_loss('Generator Loss', generator_error)
 
